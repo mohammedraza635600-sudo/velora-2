@@ -101,7 +101,7 @@ body {
 #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
 #preloader .word-wrap { text-align: center; }
 #preloader .word {
-  font-family: var(--font-serif), serif;
+  font-family: 'Cormorant Garamond', serif;
   font-size: clamp(32px, 7vw, 60px);
   letter-spacing: .5em;
   color: var(--cream);
