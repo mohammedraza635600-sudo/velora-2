@@ -6,6 +6,7 @@ import { CartProvider } from "@/components/CartContext";
 import RevealScript from "@/components/RevealScript";
 import Preloader from "@/components/Preloader";
 import GlobalMotion from "@/components/GlobalMotion";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { getSetting, DEFAULT_BRANDING, DEFAULT_NAV, DEFAULT_FOOTER, DEFAULT_ANNOUNCEMENT } from "@/lib/settings";
 
 export const metadata: Metadata = {
@@ -14,10 +15,12 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const branding = await getSetting("branding", DEFAULT_BRANDING);
-  const nav = await getSetting("navigation", DEFAULT_NAV);
-  const footer = await getSetting("footer", DEFAULT_FOOTER);
-  const announcement = await getSetting("announcement", DEFAULT_ANNOUNCEMENT);
+  const [branding, nav, footer, announcement] = await Promise.all([
+    getSetting("branding", DEFAULT_BRANDING),
+    getSetting("navigation", DEFAULT_NAV),
+    getSetting("footer", DEFAULT_FOOTER),
+    getSetting("announcement", DEFAULT_ANNOUNCEMENT),
+  ]);
 
   const cssVars = {
     "--olive": branding.primary,
@@ -53,6 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main className="pt-[76px]">{children}</main>
           <Footer columns={footer.columns} />
         </CartProvider>
+        <WhatsAppButton />
         <RevealScript />
       </body>
     </html>

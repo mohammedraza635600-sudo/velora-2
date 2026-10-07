@@ -7,9 +7,11 @@ import HeroParallax from "@/components/HeroParallax";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const hero = await getSetting("hero", DEFAULT_HERO);
-  const products = await prisma.product.findMany({ where: { status: "published" }, orderBy: { createdAt: "desc" }, take: 8 });
-  const collections = await prisma.collection.findMany({ where: { status: "active" }, orderBy: { order: "asc" }, take: 4 });
+  const [hero, products, collections] = await Promise.all([
+    getSetting("hero", DEFAULT_HERO),
+    prisma.product.findMany({ where: { status: "published" }, orderBy: { createdAt: "desc" }, take: 8 }),
+    prisma.collection.findMany({ where: { status: "active" }, orderBy: { order: "asc" }, take: 4 }),
+  ]);
 
   return (
     <>
